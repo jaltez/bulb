@@ -12,4 +12,6 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::view('mockup', 'mockup.index');
+
 require __DIR__.'/auth.php';
