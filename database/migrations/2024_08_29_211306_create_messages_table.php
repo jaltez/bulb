@@ -15,7 +15,9 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('chat_id')->constrained('chats');
             $table->text('content');
-            $table->enum('sender_type', ['user', 'agent'])->default('user');
+            $table->enum('role', ['user', 'agent'])->default('user');
+            $table->dateTime('last_message_at')->nullable();
+            $table->integer('tokens')->default(0);
             $table->timestamps();
         });
     }
