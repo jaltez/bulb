@@ -1,8 +1,8 @@
 {
-    "name": "laravel/laravel",
+    "name": "jaltez/bulb",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Standalone AI chatbot app.",
+    "keywords": ["standalone", "ai", "chatbot", "app"],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -16,6 +16,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.13",
+        "barryvdh/laravel-ide-helper": "^3.2",
         "fakerphp/faker": "^1.23.1",
         "larastan/larastan": "^2.9",
         "laravel/breeze": "^2.1.4",
@@ -55,8 +56,17 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "up": [
-            "@php artisan serve --host=bulb.test --port=80"
+        "ide": [
+            "@php artisan ide-helper:generate",
+            "@php artisan ide-helper:meta",
+            "@php artisan ide-helper:models --nowrite --dir='app' --dir='modules'"
+        ],
+        "flush": [
+            "@php artisan optimize:clear"
+        ],
+        "dev": [
+            "Composer\\Config::disableProcessTimeout",
+            "npx concurrently -c \"#93c5fd,#c4b5fd,#fb7185,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"php artisan pail --timeout=0\" \"npm run dev\" --names=server,queue,logs,vite"
         ],
         "refactor": "rector process",
         "lint": "pint",
